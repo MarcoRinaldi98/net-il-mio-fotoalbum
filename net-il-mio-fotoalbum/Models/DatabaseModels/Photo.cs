@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using net_il_mio_fotoalbum.ValidationAttributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace net_il_mio_fotoalbum.Models.DatabaseModels
 {
@@ -10,11 +11,11 @@ namespace net_il_mio_fotoalbum.Models.DatabaseModels
         [StringLength(100, ErrorMessage = "Il Titolo non può essere più lungo di 100 caratteri.")]
         public string Title { get; set; }
         [StringLength(500, ErrorMessage = "La descrizione della Foto non può superare i 500 caratteri.")]
+        [MoreThanFiveWords]
         public string Description { get; set; }
-        [Required(ErrorMessage = "L'immagine è obbligatoria")]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
         public byte[]? ImageFile { get; set; }
-        public string ImageSrc => ImageFile is null ? ImageUrl is null ? "" : ImageUrl : $"data:image/png;base64,{Convert.ToBase64String(ImageFile)}";
+        public string ImageSrc => ImageFile is null ? (ImageUrl is null) ? "" : ImageUrl : $"data:image/png;base64,{Convert.ToBase64String(ImageFile)}";
         public bool IsVisible { get; set; }
 
         // relazione N:N 

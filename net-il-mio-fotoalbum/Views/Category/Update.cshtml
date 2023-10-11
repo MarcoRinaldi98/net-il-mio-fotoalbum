@@ -1,0 +1,43 @@
+﻿@using net_il_mio_fotoalbum.Models.DatabaseModels;
+@model Category
+@{
+    // specifico quale layout dovra essere utilizzato per questa vista
+    Layout = "_Layout";
+    // Titolo personalizzato di questa vista
+    ViewData["Title"] = "Modifca Categoria";
+}
+
+@section Styles {
+    <!-- Indico il foglio di style css personalizzato per questa vista -->
+    <link rel="stylesheet" href="~/css/PhotoIndexStyle.css" />
+}
+
+<div class="container">
+    <div class="row py-3">
+        <div class="col-12">
+            <h1 class="text-center py-3">Pagina di modifica categoria</h1>
+        </div>
+        <!-- Creo il FORM di MODIFICA della categoria -->
+        <form asp-controller="Category" asp-action="Update" asp-route-itemid="@Model.Id" method="post">
+
+            <!-- AntiForgeryToken per evitare attacchi di tipo Cross-Site request forgery sui post dei form -->
+            @Html.AntiForgeryToken()
+
+            <!-- Input nascosto per non modificare l'ID della categoria -->
+            <input type="hidden" asp-for="@Model.Id" />
+
+            <!-- Inserimento del titolo-->
+            <div class="mb-3">
+                <strong class="text-white">Titolo:</strong>
+                <input type="text" class="form-control" asp-for="@Model.Title" />
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+            </div>
+
+            <!-- Pulsante di invio del FORM -->
+            <button type="submit" class="btn btn-primary"> AGGIORNA CATEGORIA </button>
+            <!-- Pulsante di annullamento e ritorno alla lista -->
+            <a class="btn btn-danger" href="@Url.Action("Index", "Category")"> ANNULLA </a>
+        </form>
+    </div>
+</div>
+

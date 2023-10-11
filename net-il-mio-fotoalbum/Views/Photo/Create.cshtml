@@ -1,0 +1,74 @@
+﻿@model PhotoFormModel
+@{
+    // specifico quale layout dovra essere utilizzato per questa vista
+    Layout = "_Layout";
+    // Titolo personalizzato di questa vista
+    ViewData["Title"] = "Creazione Nuova Foto";
+}
+
+@section Styles {
+    <!-- Indico il foglio di style css personalizzato per questa vista -->
+    <link rel="stylesheet" href="~/css/PhotoUpdateCreateStyle.css" />
+}
+
+<div class="container">
+    <div class="row py-3">
+        <div class="col-12">
+            <h1 class="text-center py-3">Pagina creazione nuova foto</h1>
+        </div>
+        <!-- Creo il FORM di CREAZIONE della foto -->
+        <form asp-controller="Photo" asp-action="Create" enctype="multipart/form-data" method="post">
+
+            <!-- AntiForgeryToken per evitare attacchi di tipo Cross-Site request forgery sui post dei form -->
+            @Html.AntiForgeryToken()
+
+            <!-- Inserimento del nome -->
+            <div class="mb-3">
+                <strong class="text-white">Titolo:</strong>
+                <input type="text" class="form-control" asp-for="Photo.Title" />
+                <span asp-validation-for="Photo.Title" class="text-danger"></span>
+            </div>
+            <!-- Inserimento della descrizione -->
+            <div class="mb-3">
+                <strong class="text-white">Descrizione:</strong>
+                <textarea class="form-control" asp-for="Photo.Description"></textarea>
+                <span asp-validation-for="Photo.Description" class="text-danger"></span>
+            </div>
+            <!-- Inserimento dell'immagine -->
+            <div class="mb-3">
+                <strong class="text-white">URL Immagine:</strong>
+                <input type="text" class="form-control" asp-for="Photo.ImageUrl" />
+                <span asp-validation-for="Photo.ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ImageFormFile" class="text-white">Oppure </label>
+                <input type="file" asp-for="ImageFormFile" class="text-white fst-italic" />
+                <span asp-validation-for="ImageFormFile" class="text-danger"></span>
+            </div>
+            <!-- Inserimento delle categorie -->
+            <div class="mb-3">
+                <strong class="text-white">Seleziona le categorie:</strong>
+                <select asp-for="SelectedCategoriesId"
+                        multiple="multiple"
+                        size="10"
+                        class="form-control mb-2 mr-sm-2 ml-sm-3 leftList"
+                        asp-items="@Model.Categories">
+                </select>
+            </div>
+            <!-- Inserimento visibilità true/false -->
+            <div class="form-field">
+                <span>
+                    <label asp-for="Photo.IsVisible" class="text-white">Visible</label>
+                    <span class="ps-2">
+                        <input type="checkbox" asp-for="Photo.IsVisible" />
+                    </span>
+                </span>
+            </div>
+
+            <!-- Pulsante di invio del FORM -->
+            <button type="submit" class="btn btn-primary"> CREA FOTO </button>
+            <!-- Pulsante di annullamento e ritorno alla lista -->
+            <a class="btn btn-danger" href="@Url.Action("Index", "Photo")"> ANNULLA </a>
+        </form>
+    </div>
+</div>

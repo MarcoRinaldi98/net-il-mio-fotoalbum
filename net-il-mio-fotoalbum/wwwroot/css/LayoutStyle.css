@@ -28,6 +28,7 @@ header {
 main {
     height: calc(100% - 150px);
     overflow-y: scroll;
+    background-color: #1d1d1d;
 }
 
     main::-webkit-scrollbar {

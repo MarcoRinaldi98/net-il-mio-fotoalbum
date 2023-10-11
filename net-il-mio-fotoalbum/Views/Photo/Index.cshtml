@@ -1,10 +1,121 @@
-﻿@{
+﻿@using net_il_mio_fotoalbum.Models.DatabaseModels;
+@model List<Photo>
+@{
     // specifico quale layout dovra essere utilizzato per questa vista
     Layout = "_Layout";
     // Titolo personalizzato di questa vista
-    ViewData["Title"] = "Le Foto";
+    ViewData["Title"] = "Tabella Foto";
 }
 
-<div class="text-center py-5">
-    <h1>Pagina Foto</h1>
+@section Styles {
+    <!-- Indico il foglio di style css personalizzato per questa vista -->
+    <link rel="stylesheet" href="~/css/PhotoIndexStyle.css" />
+}
+
+<div class="container">
+    <h1 class="text-center py-3"> Le Nostre Foto </h1>
+    @if (Model.Count() == 0)
+    {
+        <div class="text-white"> Non ci sono foto attualmente </div>
+    }
+    else
+    {
+        <!-- Creo la TABELLA che visualizzera i dati delle foto -->
+        <table class="table table-dark border border-white">
+            <thead>
+                <!-- Intestazione della tabella -->
+                <tr class="text-center">
+                    <th scope="col">Immagine</th>
+                    <th scope="col">Titolo</th>
+                    <th scope="col">Descrizione</th>
+                    <th scope="col">Categorie</th>
+                    <th scope="col">
+                        <a class="btn btn-success" href="@Url.Action("Create", "Photo")">
+                            Crea una foto
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Photo photo in Model)
+                {
+                    <tr>
+                        <td>
+                            <!-- Visualizzo l'immagine della foto -->
+                            @if(photo.ImageUrl is null)
+                            {
+                                <img class="img-thumbnail" src="@photo.ImageSrc" alt="@photo.Title">
+                            } else
+                            {
+                                <img class="img-thumbnail" src="@photo.ImageUrl" alt="@photo.Title">
+                            }
+                        </td>
+                        <td>
+                            <!-- Visualizzo il nome della foto -->
+                            @photo.Title
+                        </td>
+                        <td>
+                            <!-- Visualizzo la descrizione della foto -->
+                            @photo.Description
+                        </td>
+                        <td>
+                            <!-- Visualizzo le categorie della foto se ci sono -->
+                            @if (photo.Categories.Count() == 0)
+                            {
+                                <small class="text-white">Nessuna categoria associata</small>
+                            }
+                            else
+                            {
+                                @foreach (Category category in photo.Categories)
+                                {
+                                    <span class="badge rounded-pill bg-info text-dark">@category.Title</span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <div class="d-flex">
+                                <!-- Pulsante che mi reindirizza alla pagina di DETTAGLIO della foto -->
+                                <a class="btn btn-primary" href="@Url.Action("Details", "Photo", new {id = photo.Id})">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                </a>
+                                <!-- Pulsante che mi reindirizza alla pagina di MODIFICA della foto -->
+                                <a class="btn btn-warning mx-1" href="@Url.Action("Update", "Photo", new { id = photo.Id })">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                                <!-- Pulsante che mi apre la modale per procedere all'ELIMINAZIONE della foto -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="@("#exampleModal" + photo.Id)">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+
+                                <!-- Modale -->
+                                <div class="modal fade" id="@("exampleModal" + photo.Id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Eliminazione foto</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-black">
+                                                Vuoi eliminare la foto?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                                <!-- FORM di ELIMINAZIONE della pizza -->
+                                                <form asp-controller="Photo" asp-action="Delete" asp-route-id="@photo.Id" method="post">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn btn-danger">
+                                                        Elimina
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>

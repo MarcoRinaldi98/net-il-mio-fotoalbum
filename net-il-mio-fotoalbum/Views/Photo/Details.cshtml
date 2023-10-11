@@ -1,0 +1,94 @@
+﻿@using net_il_mio_fotoalbum.Models.DatabaseModels;
+@model Photo
+@{
+    // specifico quale layout dovra essere utilizzato per questa vista
+    Layout = "_Layout";
+    // Titolo personalizzato di questa vista
+    ViewData["Title"] = $"Dettaglio {Model.Title}";
+}
+
+@section Styles {
+    <!-- Indico il foglio di style css personalizzato per questa vista -->
+    <link rel="stylesheet" href="~/css/PhotoDetailsStyle.css" />
+}
+
+<div class="container">
+    <h1 class="text-center py-3"> Dettaglio Foto </h1>
+    <!-- Visualizzo il nome della foto -->
+    <h4 class="text-white"> @Model.Title </h4>
+    <div class="pb-2">
+        <!-- Visualizzo le categorie delle foto se ci sono -->
+        @if (Model.Categories.Count() == 0)
+        {
+            <small class="text-white">Nessuna categoria associata</small>
+        }
+        else
+        {
+            @foreach (Category category in Model.Categories)
+            {
+                <span class="badge rounded-pill bg-info text-dark">@category.Title</span>
+            }
+        }
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <!-- Visualizzo l'immagine della foto -->
+            @if (Model.ImageUrl is null)
+            {
+                <img class="img-thumbnail" src="@Model.ImageSrc" alt="@Model.Title">
+            }
+            else
+            {
+                <img class="img-thumbnail" src="@Model.ImageUrl" alt="@Model.Title">
+            }
+        </div>
+        <div class="col-6">
+            <!-- Visualizzo la descrizione della foto -->
+            <p class="text-white"> @Model.Description </p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Pulsante che mi ritorna alla lista delle foto -->
+        <a class="btn btn-secondary btn-sm my-3" href="@Url.Action("Index", "Photo")">
+            <i class="fa-solid fa-left-long"></i>
+            Torna alla lista
+        </a>
+        <div class="d-flex">
+            <!-- Pulsante che mi reindirizza alla pagina di MODIFICA della foto -->
+            <a class="btn btn-warning mx-1" href="@Url.Action("Update", "Photo", new { id = Model.Id })">
+                <i class="fa-solid fa-pen"></i>
+            </a>
+            <!-- Pulsante che mi apre la modale per procedere all'ELIMINAZIONE della foto -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa-regular fa-trash-can"></i>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Eliminazione foto</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-black">
+                            Vuoi eliminare la foto?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                            <!-- FORM di ELIMINAZIONE della foto -->
+                            <form asp-controller="Photo" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger">
+                                    Elimina
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
