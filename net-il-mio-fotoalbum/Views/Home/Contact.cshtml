@@ -1,0 +1,42 @@
+﻿@{
+    // specifico quale layout dovra essere utilizzato per questa vista
+    Layout = "_Layout";
+    // Titolo personalizzato di questa vista
+    ViewData["Title"] = "Contattaci";
+}
+
+@section Styles {
+    <!-- Indico il foglio di style css personalizzato per questa vista -->
+    <link rel="stylesheet" href="~/css/HomeIndexStyle.css" />
+}
+
+
+<div class="container">
+    <h1 class="text-center py-3">Contattaci</h1>
+
+    <!-- Creo il FORM di contatto dell'utente -->
+    <form asp-controller="" asp-action="" method="post">
+
+        <!-- AntiForgeryToken per evitare attacchi di tipo Cross-Site request forgery sui post dei form -->
+        @Html.AntiForgeryToken()
+
+        <!-- Inserimento del titolo -->
+        <div class="mb-3">
+            <strong class="text-white">Email:</strong>
+            <input type="email" class="form-control" />
+        </div>
+
+        <!-- Inserimento del titolo -->
+        <div class="mb-3">
+            <strong class="text-white">Messaggio:</strong>
+            <br>
+            <textarea class="w-100" rows="10">Inserisci il tuo messaggio...</textarea>
+        </div>
+
+        <!-- Pulsante di invio del FORM -->
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary"> INVIA MESSAGGIO </button>
+        </div>
+        
+    </form>
+</div>

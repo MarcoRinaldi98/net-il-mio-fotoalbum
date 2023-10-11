@@ -27,6 +27,14 @@ namespace net_il_mio_fotoalbum.Controllers
             return View();
         }
 
+        // Vista Contact
+        public IActionResult Contact()
+        {
+            _myLogger.WriteLog("L'utente è arrivato sulla pagina Home > Contact");
+
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

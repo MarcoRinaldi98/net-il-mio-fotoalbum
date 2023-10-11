@@ -29,6 +29,7 @@
                     <th scope="col">Titolo</th>
                     <th scope="col">Descrizione</th>
                     <th scope="col">Categorie</th>
+                    <th scope="col">Visibile</th>
                     @if (User.IsInRole("ADMIN"))
                     {
                         <th scope="col">
@@ -77,6 +78,17 @@
                                 {
                                     <span class="badge rounded-pill bg-info text-dark">@category.Title</span>
                                 }
+                            }
+                        </td>
+                        <td>
+                            <!-- Visualizzo l'immagine della foto -->
+                            @if (photo.IsVisible == true)
+                            {
+                                <span> Si </span>
+                            }
+                            else
+                            {
+                                <span> No </span>
                             }
                         </td>
                         <td>
