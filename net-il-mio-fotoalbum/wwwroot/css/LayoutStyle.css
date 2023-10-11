@@ -1,0 +1,45 @@
+﻿/* CSS RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    height: 100vh;
+}
+
+/* HEADER */
+header {
+    height: 100px;
+    background-color: black;
+}
+
+    header .nav-item {
+        padding: 1rem;
+    }
+
+        header .nav-item .nav-link {
+            color: white;
+        }
+
+/* MAIN */
+main {
+    height: calc(100% - 150px);
+    overflow-y: scroll;
+}
+
+    main::-webkit-scrollbar {
+        display: none;
+    }
+
+/* FOOTER */
+footer {
+    height: 50px;
+    background-color: black;
+}
+
+    footer small {
+        letter-spacing: .2rem;
+    }

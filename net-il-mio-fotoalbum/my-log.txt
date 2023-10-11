@@ -1,0 +1,5 @@
+11-10-2023 11:41:40 LOG: L'utente è arrivato sulla pagina Home > Index
+11-10-2023 11:41:44 LOG: L'utente è arrivato sulla pagina Home > Index
+11-10-2023 11:41:45 LOG: L'utente è arrivato sulla pagina Photo > Index
+11-10-2023 11:41:46 LOG: L'utente è arrivato sulla pagina Home > Index
+11-10-2023 11:41:47 LOG: L'utente è arrivato sulla pagina Photo > Index
