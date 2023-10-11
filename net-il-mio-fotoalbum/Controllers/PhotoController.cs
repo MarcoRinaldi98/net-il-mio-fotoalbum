@@ -10,6 +10,7 @@ using net_il_mio_fotoalbum.Models.DatabaseModels;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
+    [Authorize(Roles = "USER,ADMIN")]
     public class PhotoController : Controller
     {
         // Custom Logger
@@ -51,6 +52,7 @@ namespace net_il_mio_fotoalbum.Controllers
         }
 
         // Creazione di una foto
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -74,6 +76,7 @@ namespace net_il_mio_fotoalbum.Controllers
             return View("Create", model);
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(PhotoFormModel data)
@@ -124,6 +127,7 @@ namespace net_il_mio_fotoalbum.Controllers
         }
 
         // Modifica di una foto
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -156,6 +160,7 @@ namespace net_il_mio_fotoalbum.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(int id, PhotoFormModel data)
@@ -224,6 +229,7 @@ namespace net_il_mio_fotoalbum.Controllers
         }
 
         // Cancellazione di una foto
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)

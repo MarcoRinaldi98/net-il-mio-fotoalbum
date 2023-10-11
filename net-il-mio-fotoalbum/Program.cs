@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using net_il_mio_fotoalbum.CustomLoggers;
 using net_il_mio_fotoalbum.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace net_il_mio_fotoalbum
 {
@@ -37,6 +38,8 @@ namespace net_il_mio_fotoalbum
             app.UseStaticFiles();
 
             app.UseRouting();
+                        
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

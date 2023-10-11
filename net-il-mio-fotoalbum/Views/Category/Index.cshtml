@@ -27,11 +27,18 @@
                 <tr class="text-center">
                     <th scope="col" class="text-center">ID</th>
                     <th scope="col" class="text-center">Titolo</th>
-                    <th scope="col" class="d-flex justify-content-end">
-                        <a class="btn btn-success" href="@Url.Action("Create", "Category")">
-                            Crea una categoria
-                        </a>
-                    </th>
+                    @if (User.IsInRole("ADMIN"))
+                    {
+                        <th scope="col" class="d-flex justify-content-end">
+                            <a class="btn btn-success" href="@Url.Action("Create", "Category")">
+                                Crea una categoria
+                            </a>
+                        </th>
+                    }
+                    else
+                    {
+                        <th scope="col"></th>
+                    }
                 </tr>
             </thead>
             <tbody>
@@ -52,39 +59,43 @@
                                 <a class="btn btn-primary" href="@Url.Action("Details", "Category", new {id = category.Id})">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
-                                <!-- Pulsante che mi reindirizza alla pagina di MODIFICA della categoria -->
-                                <a class="btn btn-warning mx-1" href="@Url.Action("Update", "Category", new { id = category.Id })">
-                                    <i class="fa-solid fa-pen"></i>
-                                </a>
-                                <!-- Pulsante che mi apre la modale per procedere all'ELIMINAZIONE della categoria -->
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="@("#exampleModal" + category.Id)">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                </button>
+                                @if (User.IsInRole("ADMIN"))
+                                {
+                                    <!-- Pulsante che mi reindirizza alla pagina di MODIFICA della categoria -->
+                                    <a class="btn btn-warning mx-1" href="@Url.Action("Update", "Category", new { id = category.Id })">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <!-- Pulsante che mi apre la modale per procedere all'ELIMINAZIONE della categoria -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="@("#exampleModal" + category.Id)">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </button>
 
-                                <!-- Modale -->
-                                <div class="modal fade" id="@("exampleModal" + category.Id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Eliminazione categoria</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body text-black">
-                                                Vuoi eliminare la categoria?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                                <!-- FORM di ELIMINAZIONE della categoria -->
-                                                <form asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" method="post">
-                                                    @Html.AntiForgeryToken()
-                                                    <button type="submit" class="btn btn-danger">
-                                                        Elimina
-                                                    </button>
-                                                </form>
+                                    <!-- Modale -->
+                                    <div class="modal fade" id="@("exampleModal" + category.Id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Eliminazione categoria</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-black">
+                                                    Vuoi eliminare la categoria?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                                    <!-- FORM di ELIMINAZIONE della categoria -->
+                                                    <form asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" method="post">
+                                                        @Html.AntiForgeryToken()
+                                                        <button type="submit" class="btn btn-danger">
+                                                            Elimina
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
+                                
                             </div>
                         </td>
                     </tr>

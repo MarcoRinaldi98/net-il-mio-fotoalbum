@@ -3,7 +3,9 @@
     <nav class="navbar navbar-expand h-100">
         <div class="container-fluid h-100 px-4">
             <!-- Logo -->
-            <i class="fa-solid fa-camera text-white"></i>
+            <a class="h-100" href="@Url.Action("Index", "Home")">
+                <img class="h-100 px-3" src="~/img/camera.png" alt="Logo Pizzeria">
+            </a>
             <!-- Menu navbar -->
             <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
@@ -19,7 +21,7 @@
                 </ul>
             </div>
             <!-- Login -->
-            <i class="fa-solid fa-user text-white"></i>
+            <partial name="_LoginPartial" />
         </div>
     </nav>
 </header>

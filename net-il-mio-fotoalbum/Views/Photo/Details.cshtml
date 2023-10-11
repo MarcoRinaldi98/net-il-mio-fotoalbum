@@ -53,41 +53,44 @@
             <i class="fa-solid fa-left-long"></i>
             Torna alla lista
         </a>
-        <div class="d-flex">
-            <!-- Pulsante che mi reindirizza alla pagina di MODIFICA della foto -->
-            <a class="btn btn-warning mx-1" href="@Url.Action("Update", "Photo", new { id = Model.Id })">
-                <i class="fa-solid fa-pen"></i>
-            </a>
-            <!-- Pulsante che mi apre la modale per procedere all'ELIMINAZIONE della foto -->
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fa-regular fa-trash-can"></i>
-            </button>
+        @if (User.IsInRole("ADMIN"))
+        {
+            <div class="d-flex">
+                <!-- Pulsante che mi reindirizza alla pagina di MODIFICA della foto -->
+                <a class="btn btn-warning mx-1" href="@Url.Action("Update", "Photo", new { id = Model.Id })">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+                <!-- Pulsante che mi apre la modale per procedere all'ELIMINAZIONE della foto -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Eliminazione foto</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body text-black">
-                            Vuoi eliminare la foto?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                            <!-- FORM di ELIMINAZIONE della foto -->
-                            <form asp-controller="Photo" asp-action="Delete" asp-route-id="@Model.Id" method="post">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-danger">
-                                    Elimina
-                                </button>
-                            </form>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Eliminazione foto</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-black">
+                                Vuoi eliminare la foto?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                <!-- FORM di ELIMINAZIONE della foto -->
+                                <form asp-controller="Photo" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-danger">
+                                        Elimina
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 </div>
 

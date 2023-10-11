@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using net_il_mio_fotoalbum.CustomLoggers;
@@ -7,6 +8,7 @@ using net_il_mio_fotoalbum.Models;
 using net_il_mio_fotoalbum.Models.DatabaseModels;
 namespace net_il_mio_fotoalbum.Controllers
 {
+    [Authorize(Roles = "USER,ADMIN")]
     public class CategoryController : Controller
     {
         // Custom Logger
@@ -47,6 +49,7 @@ namespace net_il_mio_fotoalbum.Controllers
         }
 
         // Creazione di una categoria
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -57,6 +60,7 @@ namespace net_il_mio_fotoalbum.Controllers
             return View("Create", newCategory);
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category category)
@@ -68,6 +72,7 @@ namespace net_il_mio_fotoalbum.Controllers
         }
 
         // Modifica di una categoria
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -87,6 +92,7 @@ namespace net_il_mio_fotoalbum.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(int id, Category category)
@@ -109,6 +115,7 @@ namespace net_il_mio_fotoalbum.Controllers
         }
 
         // Cancellazione di una categoria
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
