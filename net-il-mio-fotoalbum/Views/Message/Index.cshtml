@@ -14,6 +14,10 @@
 <div class="container">
     <h1 class="text-center py-3">Contattaci</h1>
 
+    <div id="successMessage" class="alert alert-success d-none">
+        Messaggio inviato correttamente!
+    </div>
+
     <!-- Creo il FORM di contatto dell'utente -->
     <form id="messageForm">
 
@@ -58,11 +62,21 @@
             axios.post("/api/Messages/CreateMessage", data)
                 .then(function (response) {
                     console.log(data);
+                    // Reimposta il form
+                    document.getElementById("messageForm").reset();
+
+                    // Mostra il messaggio di invio andato bene
+                    const successMessage = document.getElementById("successMessage");
+                    successMessage.classList.remove("d-none");
+
+                    // Nascondi il messaggio di avviso dopo 5 secondi
+                    setTimeout(function () {
+                        successMessage.classList.add("d-none");
+                    }, 5000); 
                 })
                 .catch(function (error) {
                     console.error(error);
                 });
-            document.getElementById("messageForm").reset();
         });
     </script>
 }

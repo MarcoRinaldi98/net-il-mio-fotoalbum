@@ -493,3 +493,5 @@
 12-10-2023 13:09:01 LOG: L'utente è arrivato sulla pagina Message > Index
 12-10-2023 13:09:14 LOG: L'utente è arrivato sulla pagina Message > Index
 12-10-2023 13:10:14 LOG: L'utente è arrivato sulla pagina Message > Index
+12-10-2023 14:00:36 LOG: L'utente è arrivato sulla pagina Home > Index
+12-10-2023 14:00:48 LOG: L'utente è arrivato sulla pagina Message > Index
