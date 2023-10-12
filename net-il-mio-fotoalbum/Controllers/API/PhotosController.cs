@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using net_il_mio_fotoalbum.Database;
 using net_il_mio_fotoalbum.Models.DatabaseModels;
 

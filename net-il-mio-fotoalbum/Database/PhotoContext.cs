@@ -10,6 +10,7 @@ namespace net_il_mio_fotoalbum.Database
         // Liste dei dati nel Database
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         // Collegamento al DataBase
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
