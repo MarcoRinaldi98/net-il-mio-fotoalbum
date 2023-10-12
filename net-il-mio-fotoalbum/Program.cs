@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using net_il_mio_fotoalbum.CustomLoggers;
 using net_il_mio_fotoalbum.Database;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace net_il_mio_fotoalbum
 {
@@ -20,9 +21,13 @@ namespace net_il_mio_fotoalbum
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Codice di configurazione per il serializzatore JSON, in modo che ignori completamente le eventuali relazioni 1:N e N:N presenti nel JSON risultante
+            builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
             // Custom Loggers
             builder.Services.AddScoped<ICustomLogger, CustomFileLogger>();
             builder.Services.AddScoped<PhotoContext, PhotoContext>();
+            builder.Services.AddScoped<IRepositoryPhotos, RepositoryPhotos>();
 
             var app = builder.Build();
 

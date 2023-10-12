@@ -10,7 +10,96 @@
     <link rel="stylesheet" href="~/css/HomeIndexStyle.css" />
 }
 
-
 <div class="container">
-    <h1 class="text-center py-3">Benvenuti nella Home Page</h1>
+    <div class="row">
+        <h1 class="text-center pt-4">Benvenuti nella Home Page</h1>
+        <h2 class="text-center">ecco la lista delle foto</h2>
+        <div class="col-5">
+            <div>
+                <input id="js_search_box" type="text" class="form-control my-3" placeholder="Cerca per nome...">
+            </div>
+        </div>
+    </div>
+
+    <div id="loading-spinner" class="row text-center">
+        <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+            <div class="spinner-border text-light" role="status">
+            </div>
+            <span class="text-white">Caricando le foto...</span>
+        </div>
+    </div>
+
+    <div id="row-no-foto" class="row d-none">
+        <div class="col-12 text-white pt-5 text-center">
+            Nessuna pizza trovata!
+        </div>
+    </div>
+
+    <div id="list-of-foto" class="row d-none">
+    </div>
 </div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        // richiamo la funzione all'avvio della pagina
+        loadPhotos();
+
+        // ogni volta che inserisco qualcosa nell'imput di ricerca mi avvia la ricerca
+        document.getElementById("js_search_box").addEventListener('keyup', searchPhotos);
+
+        function searchPhotos() {
+            let searchString = document.getElementById("js_search_box").value;
+
+            loadPhotos(searchString);
+        }
+
+        function loadPhotos(searchParam) {
+            // chiamata axios per ricevere le foto dalle mie API
+            axios.get('/api/Photos/SearchPhotos', {
+                params: {
+                    search: searchParam
+                }
+            }).then((res) => {
+
+                console.log(res);
+
+                let divNoPhotos = document.getElementById("row-no-foto");
+                let loadingSpinnerElement = document.getElementById("loading-spinner");
+                let listOfPhotosElement = document.getElementById("list-of-foto");
+
+                if (res.data.length == 0) {
+
+                    divNoPhotos.classList.remove("d-none");
+                    loadingSpinnerElement.classList.add("d-none");
+                    listOfPhotosElement.classList.add("d-none");
+
+                } else {
+                    loadingSpinnerElement.classList.add("d-none");
+                    listOfPhotosElement.classList.remove("d-none");
+                    divNoPhotos.classList.add("d-none");
+
+                    listOfPhotosElement.innerHTML = "";
+                    // per ogni foto ricevuta come risposta
+                    res.data.forEach(foto => {
+                        console.log(foto);
+                        // mostro solo le foto visibili
+                        if (foto.isVisible == true) {
+                            //genero la carta della foto
+                            listOfPhotosElement.innerHTML +=
+                                `
+                                            <div class="col-4 mb-4">
+                                                <div style="background-image: url(${foto.imageSrc}); background-size: cover;" class="h-100 w-100 rounded">
+                                                        <h4 class="text-center text-white py-5"> ${foto.title} </h4>
+                                                        <p class="text-center text-white"> ${foto.description} </p>
+                                                </div>
+                                            </div>
+                            `;
+                        }
+                    });
+                
+            }
+            })
+        }
+    </script>
+}
